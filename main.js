@@ -69,6 +69,49 @@ const posts = [
 
 
 
-// seleziono il contenitore (post)
-const post = document.querySelector(".post");
-console.log(post);
+// seleziono il contenitore dei post
+const postContainer = document.getElementById("container");
+
+
+posts.forEach(function (post) {
+
+    // creo elemento div per il post
+    const postElement = document.createElement("div");
+    postElement.classList.add("post");
+
+    // aggiungo html del post
+    postElement.innerHTML = `
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                    <img src=" ${post.author.image}" class="profile-pic" alt="">
+                                           
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${post.author.name}</div>
+                        <div class="post-meta__time">${post.created}</div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="post__text">${post.content}</div>
+            <div class="post__image">
+                <img src="${post.media}" alt="">
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button js-like-button" href="#" data-postid="${post.id}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
+                    </div>
+                </div> 
+            </div>           
+    `;
+
+    // aggiungo il post al contenitore
+    postContainer.appendChild(postElement);
+});
