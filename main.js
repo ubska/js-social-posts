@@ -111,7 +111,37 @@ posts.forEach(function (post) {
                 </div> 
             </div>           
     `;
-
     // aggiungo il post al contenitore
     postContainer.appendChild(postElement);
+});
+
+
+
+// Aggiungo gli event listener per i bottoni "Mi Piace"
+const likeButtons = document.querySelectorAll('.js-like-button');
+
+
+likeButtons.forEach(button => {
+    button.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const postId = this.getAttribute('data-postid');
+        const likeCounter = document.getElementById(`like-counter-${postId}`);
+
+        if (!likedPosts.includes(postId)) {
+            // Incremento il counter dei likes
+            likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
+            // Cambio il colore del testo del bottone
+            this.classList.add('like-button--liked');
+            // Aggiungo l'id del post all'array dei liked posts
+            likedPosts.push(postId);
+        } else {
+            // Decremento il counter dei likes
+            likeCounter.textContent = parseInt(likeCounter.textContent) - 1;
+            // Cambio il colore del testo del bottone
+            this.classList.remove('like-button--liked');
+            // Rimuovo l'id del post dall'array dei liked posts
+            likedPosts = likedPosts.filter(id => id !== postId);
+        }
+    });
 });
